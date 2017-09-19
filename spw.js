@@ -5,21 +5,29 @@
 
 var generateButton = document.getElementById("generate");
 var wordsArray = [];
+var combination = [];
 
 generateButton.onclick = function() {
   populateWordsArray();
   pickWordsfrom(wordsArray);
-  printWords(first_word,second_word,third_word);
+  printWords(combinationIteration,first_word,second_word,third_word);
 };
 
 // for (i = 0, i < 10, i++):
 //   console.log(document.getElementById(i).value());
 
-var first_word, second_word, third_word;
+var first_word, second_word, third_word,combinationIteration;
 function pickWordsfrom(array) {
-  first_word = array[Math.floor(Math.random()*array.length)];
-  second_word = array[Math.floor(Math.random()*array.length)];
-  third_word = array[Math.floor(Math.random()*array.length)];
+  var randomPos = Math.floor(Math.random()*array.length);
+  first_word = array[randomPos];
+  array.splice(randomPos,1);
+  randomPos = Math.floor(Math.random()*array.length);
+  second_word = array[randomPos];
+  array.splice(randomPos,1);
+  randomPos = Math.floor(Math.random()*array.length);
+  third_word = array[randomPos];
+  combination.push([first_word,second_word,third_word]);
+  combinationIteration = combination.length - 1;
 };
 
 function populateWordsArray() {
@@ -31,10 +39,11 @@ function populateWordsArray() {
   console.log(wordsArray);
 };
 
-function printWords(a,b,c) {
+function printWords(i,a,b,c) {
   console.log(a+" "+b+" "+c);
   var div = document.createElement('div');
   document.getElementById("combinations-container").appendChild(div);
   div.setAttribute('class', 'combination');
+  div.setAttribute('id','combination-'+i);
   div.innerText = a + " " + b + " " + c;
 };
